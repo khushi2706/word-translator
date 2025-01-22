@@ -1,5 +1,4 @@
-'use client';
-
+'use client'
 import { useState } from 'react';
 import { FiCopy } from 'react-icons/fi';
 
@@ -14,6 +13,7 @@ export default function Translator() {
   });
   const [translationObject, setTranslationObject] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState('');
 
   const translateWord = async () => {
     if (!input.trim()) return;
@@ -50,9 +50,10 @@ export default function Translator() {
     }
   };
 
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text, key) => {
     navigator.clipboard.writeText(text);
-    alert(`Copied: ${text}`);
+    setCopied(key);
+    setTimeout(() => setCopied(''), 2000);
   };
 
   const handleKeyDown = (e) => {
@@ -88,10 +89,10 @@ export default function Translator() {
               <strong>{language}:</strong> {translation}
             </div>
             <button
-              onClick={() => copyToClipboard(translation)}
+              onClick={() => copyToClipboard(translation, language)}
               className="text-blue-500 hover:text-blue-700"
             >
-              <FiCopy size={20} />
+              {copied === language ? 'Copied' : <FiCopy size={20} />}
             </button>
           </div>
         ))}
@@ -104,10 +105,10 @@ export default function Translator() {
                 {JSON.stringify(translationObject, null, 2)}
               </pre>
               <button
-                onClick={() => copyToClipboard(JSON.stringify(translationObject, null, 2))}
+                onClick={() => copyToClipboard(JSON.stringify(translationObject, null, 2), 'object')}
                 className="text-blue-500 hover:text-blue-700 ml-4"
               >
-                <FiCopy size={20} />
+                {copied === 'object' ? 'Copied' : <FiCopy size={20} />}
               </button>
             </div>
           </div>
