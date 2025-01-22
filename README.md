@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Translator App
 
-## Getting Started
+This Translator App is designed for personal use to quickly translate an English word into multiple languages and copy the translations easily. It also provides the translations in a structured JSON format for convenient use in code or other applications.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Translates an English word into:
+  - Chinese (`zh-CN`)
+  - German (`de-DE`)
+  - Spanish (`es-ES`)
+  - French (`fr-FR`)
+  - English (`en-US`)
+- Displays translations in a structured JSON format.
+- Provides a "Copy" option for each translation and the JSON object.
+- Shows "Copied" text upon successful copying.
+- Indicates "Fetching" while waiting for the API response.
+- Allows submitting the form using the "Enter" key.
+- Minimal, clean UI with responsive design.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Purpose
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+This app is created for **personal use** to translate a single word into multiple languages for work purposes. It utilizes web scraping to fetch translations, ensuring quick and reliable results. The app is not intended for commercial use, and any misuse of the service or API may lead to restrictions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Technologies Used
 
-## Learn More
+- **Next.js (App Router)**: Framework for the front end and API integration.
+- **React Icons**: For copy button icons and UI enhancements.
+- **Tailwind CSS**: For styling and responsive design.
+- **Web scraping**: Fetches translation data from Google Translate.
 
-To learn more about Next.js, take a look at the following resources:
+## How to Use
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/translator-app.git
+   cd translator-app
