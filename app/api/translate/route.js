@@ -7,11 +7,13 @@ export async function POST(req) {
     }
 
     const languages = {
-        Chinese: 'zh-CN',
+        'Chinese-simplified': 'zh-CN',
+        'Chinese-traditional': 'zh-TW',
         German: 'de-DE',
         Spanish: 'es-ES',
         French: 'fr-FR',
         English: 'en-US',
+        Swedish: 'sv-SE',
     };
 
     try {
@@ -24,6 +26,7 @@ export async function POST(req) {
                 )}`
             );
             const data = await response.json();
+
             translations[language] = data[0][0][0];
         }
 

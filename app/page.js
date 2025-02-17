@@ -33,11 +33,13 @@ export default function Translator() {
       setTranslationObject(
         Object.entries(data.translations).reduce((acc, [lang, trans]) => {
           const code = {
-            Chinese: 'zh-CN',
+            'Chinese-simplified': 'zh-CN',
+            'Chinese-traditional': 'zh-TW',
             German: 'de-DE',
             Spanish: 'es-ES',
             French: 'fr-FR',
             English: 'en-US',
+            Swedish: 'sv-SE',
           }[lang];
           acc[code] = trans;
           return acc;
