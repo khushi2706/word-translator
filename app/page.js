@@ -4,16 +4,34 @@ import { FiCopy } from 'react-icons/fi';
 
 export default function Translator() {
   const [input, setInput] = useState('');
-  const [translations, setTranslations] = useState({
-    Chinese: '',
-    German: '',
-    Spanish: '',
-    French: '',
-    English: '',
-  });
+  const [translations, setTranslations] = useState({});
   const [translationObject, setTranslationObject] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState('');
+
+  // Available languages
+  const availableLanguages = [
+    'Chinese (China)',
+    'English (United States)',
+    'Spanish (Spain)',
+    'French (France)',
+    'English (United Kingdom)',
+    'German (Germany)',
+    'Chinese-traditional',
+    'Swedish'
+  ];
+
+  // Default selected languages
+  const defaultSelectedLanguages = [
+    'Chinese (China)',
+    'English (United States)',
+    'Spanish (Spain)',
+    'French (France)',
+    'English (United Kingdom)',
+    'German (Germany)'
+  ];
+
+  const [selectedLanguages, setSelectedLanguages] = useState(defaultSelectedLanguages);
 
   const translateWord = async () => {
     if (!input.trim()) return;
@@ -25,23 +43,30 @@ export default function Translator() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ text: input }),
+        body: JSON.stringify({
+          text: input,
+          selectedLanguages: selectedLanguages
+        }),
       });
 
       const data = await res.json();
       setTranslations(data.translations);
       setTranslationObject(
         Object.entries(data.translations).reduce((acc, [lang, trans]) => {
-          const code = {
-            'Chinese-simplified': 'zh-CN',
+          const codeMap = {
+            'Chinese (China)': 'zh-CN',
+            'English (United States)': 'en-US',
+            'Spanish (Spain)': 'es-ES',
+            'French (France)': 'fr-FR',
+            'English (United Kingdom)': 'en-GB',
+            'German (Germany)': 'de-DE',
             'Chinese-traditional': 'zh-TW',
-            German: 'de-DE',
-            Spanish: 'es-ES',
-            French: 'fr-FR',
-            English: 'en-US',
-            Swedish: 'sv-SE',
-          }[lang];
-          acc[code] = trans;
+            'Swedish': 'sv-SE',
+          };
+          const code = codeMap[lang];
+          if (code) {
+            acc[code] = trans;
+          }
           return acc;
         }, {})
       );
@@ -50,6 +75,16 @@ export default function Translator() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLanguageChange = (language) => {
+    setSelectedLanguages(prev => {
+      if (prev.includes(language)) {
+        return prev.filter(lang => lang !== language);
+      } else {
+        return [...prev, language];
+      }
+    });
   };
 
   const copyToClipboard = (text, key) => {
@@ -66,7 +101,7 @@ export default function Translator() {
     <>
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl font-bold mb-6">Translator App</h1>
-        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+        <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-6">
           <input
             type="text"
             placeholder="Enter English word"
@@ -75,10 +110,29 @@ export default function Translator() {
             onKeyDown={handleKeyDown}
             className="w-full p-2 border border-gray-300 rounded-lg mb-4"
           />
+
+          {/* Language Selection */}
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">Select Languages:</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {availableLanguages.map((language) => (
+                <label key={language} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={selectedLanguages.includes(language)}
+                    onChange={() => handleLanguageChange(language)}
+                    className="rounded"
+                  />
+                  <span className="text-sm">{language}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
           <button
             onClick={translateWord}
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-            disabled={loading}
+            disabled={loading || selectedLanguages.length === 0}
           >
             {loading ? 'Translating...' : 'Translate'}
           </button>
