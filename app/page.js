@@ -18,7 +18,8 @@ export default function Translator() {
     'English (United Kingdom)',
     'German (Germany)',
     'Chinese-traditional',
-    'Swedish'
+    'Swedish',
+    'Portuguese (Brazil)'
   ];
 
   // Default selected languages
@@ -62,6 +63,7 @@ export default function Translator() {
             'German (Germany)': 'de-DE',
             'Chinese-traditional': 'zh-TW',
             'Swedish': 'sv-SE',
+            'Portuguese (Brazil)': 'pt-BR',
           };
           const code = codeMap[lang];
           if (code) {
