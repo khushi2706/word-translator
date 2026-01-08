@@ -16,6 +16,7 @@ export async function POST(req) {
         'German (Germany)': 'de-DE',
         'Chinese-traditional': 'zh-TW',
         'Swedish': 'sv-SE',
+        'Portuguese (Brazil)': 'pt-BR',
     };
 
     // Default languages if none selected
